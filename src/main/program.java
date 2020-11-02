@@ -26,15 +26,12 @@ public class program extends Application {
 
 	private final String IMG_FUNDO = "recursos/1280.png";
 	private final String IMG_AVIAO = "recursos/aviao.png";
-	
 
 	private final Image imgFundo = new Image(getClass().getResourceAsStream(IMG_FUNDO));
 	private final Image imgAviao = new Image(getClass().getResourceAsStream(IMG_AVIAO));
-	
 
 	private final ImageView viewFundo = new ImageView(imgFundo);
 	private final ImageView viewAviao = new ImageView(imgAviao);
-
 
 	private final world mundo = new world(1262, 825);
 	private final aviao aviao0 = new aviao(600, 750);
@@ -42,7 +39,7 @@ public class program extends Application {
 	List<Circle> pShoots = new ArrayList<Circle>();
 	Pane root = new Pane();
 	AnimationTimer timer;
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -52,7 +49,6 @@ public class program extends Application {
 			viewAviao.setTranslateX(aviao0.getPosicaoX());
 			viewAviao.setTranslateY(aviao0.getPosicaoY());
 
-			
 			root.getChildren().add(viewFundo);
 			root.getChildren().add(viewAviao);
 
@@ -61,8 +57,8 @@ public class program extends Application {
 			primaryStage.setTitle("Go Aero");
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
-			// AnimationTimer
+
+			// animaçao
 			timer = new AnimationTimer() {
 				@Override
 				public void handle(long arg0) {
@@ -112,50 +108,47 @@ public class program extends Application {
 
 					}
 				}
-				if (evt.getCode() == KeyCode.SPACE) {
-					playerShoot(aviao0.getPosicaoX(), aviao0.getPosicaoY());
-				}
 
 			});
-			
-			
-			
-			
-			
+
+			scene.setOnKeyReleased((evt) -> {
+				if (evt.getCode() == KeyCode.SPACE) {
+					aviaoShoot(aviao0.getPosicaoX(), aviao0.getPosicaoY());
+				}
+			});
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	public void gameUpdate() {
-		
-		// updating players Shoots
-		playersShootUpdate();
-		
+
+		// atualizaçao do tiro / animaçao
+		aviaoShootUpdate();
+
 	}
-	
 
 	public Circle shoot(double x, double y) {
 		Circle c = new Circle();
-		c.setFill(Color.GREENYELLOW);
+		c.setFill(Color.SPRINGGREEN);
 		c.setLayoutX(x);
 		c.setLayoutY(y);
-		c.setRadius(3);
+		c.setRadius(4);
 		return c;
 	}
-	// tentar adicionar imagem, ao a key space chama player shoot, assim devo criar uma instancia q chama root.view cordenadas aqui
-	public void playerShoot(double x, double y) {
+
+	public void aviaoShoot(double x, double y) {
 		pShoots.add(shoot((x + 30), y));
 		root.getChildren().add(pShoots.get(pShoots.size() - 1));
 	}
-	
-	private void playersShootUpdate() {
+
+	private void aviaoShootUpdate() {
 
 		if (!pShoots.isEmpty()) {
 			for (int i = 0; i < pShoots.size(); i++) {
-				pShoots.get(i).setLayoutY(pShoots.get(i).getLayoutY() - 3);
+				pShoots.get(i).setLayoutY(pShoots.get(i).getLayoutY() - 7); // numero representa velocidade do tiro
 				if (pShoots.get(i).getLayoutY() <= 0) {
 					root.getChildren().remove(pShoots.get(i));
 					pShoots.remove(i);
@@ -163,7 +156,7 @@ public class program extends Application {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

@@ -27,10 +27,6 @@ public class aviao extends objetos {
 		return velocidade;
 	}
 
-	public void setVelocidade(float velocidade) {
-		this.velocidade = velocidade;
-	}
-
 	public int getPosicaoX() {
 		return (int) this.posicaoX;
 	}
