@@ -8,8 +8,6 @@ package core;
 public class aviao extends objetos {
 
 	private float velocidade = 50;
-	protected float posicaoX;
-	protected float posicaoY;
 	private final int altura = 72;
 	private final int largura = 60;
 
