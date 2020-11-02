@@ -2,9 +2,8 @@
  Meu projeto de um jogo ( Em construção )
  
  # Tarefas
- 
- - [ ] Implementar tiros no avião principal
- - [ ] Colocar inimigos 
+ - [x] Implementar tiros no avião
+ - [ ] Colocar inimigos
  - [ ] Destruir inimigos com os tiros
  - [ ] Fazer explosão ao destruir inimigos
  - [ ] Dificuldade aumenta gradativamente
@@ -16,11 +15,15 @@
  - [ ] Acrescentar as teclas WASD como direcional
  
 
+ 
+
  ## Sobre
  
- Este é um projeto de um jogo no qual pretendo construir aos poucos, segue uma imagem do atual:
+ Este é um projeto de um jogo no qual pretendo construir aos poucos, com o objetivo de ganhar experiência  e testar minhas habilidades, evoluindo na prática com um projeto.
  
- ![Imagem Atual](https://i.ibb.co/NsYm3w8/goaero600.png)
+ Segue uma imagem do atual:
+ 
+ ![Imagem Atual](https://i.ibb.co/YZ8tnkM/PRINT600.jpg)
  
 Qualquer sugestão ou crítica será bem-vinda.
   Contato: wellingtonsantos7799@gmail.com
