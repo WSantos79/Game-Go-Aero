@@ -3,8 +3,8 @@
  
  # Tarefas
  - [x] Implementar tiros no avião
- - [ ] Colocar inimigos
- - [ ] Destruir inimigos com os tiros
+ - [x] Colocar inimigos
+ - [x] Destruir inimigos com os tiros
  - [ ] Fazer explosão ao destruir inimigos
  - [ ] Dificuldade aumenta gradativamente
  - [ ] Game Over ao colidir com inimigo
