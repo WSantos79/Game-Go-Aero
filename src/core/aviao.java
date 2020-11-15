@@ -7,7 +7,7 @@ package core;
  */
 public class aviao extends objetos {
 
-	private float velocidade = 50;
+	private float velocidade = 25;
 
 	public float getVelocidade() {
 		return velocidade;

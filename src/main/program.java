@@ -25,15 +25,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class program extends Application {
 
 	private static final Random RAND = new Random();
-
-	private int pontos = 0;
 
 	private static final String IMG_FUNDO = "recursos/1280.png";
 	private static final String IMG_AVIAO = "recursos/aviao.png";
@@ -51,14 +54,16 @@ public class program extends Application {
 	private final aviao aviao0 = new aviao(600, 750);
 
 	
-
+	private int pontos = 0;
+	Text pontostxt;
+	
 	List<Circle> pShoots = new ArrayList<Circle>();
 	Circle dotR = new Circle();
 	List<ImageView> enemies0 = new ArrayList<ImageView>();
 	List<ImageView> enemies1 = new ArrayList<ImageView>();
 	Pane root = new Pane();
-	AnimationTimer timer;
-
+	AnimationTimer timer;	
+	
 	Timer timer2 = new Timer();
 
 	boolean isMove = true;
@@ -79,7 +84,14 @@ public class program extends Application {
 			root.getChildren().add(viewFundo);
 			root.getChildren().add(viewAviao); // cria aviao principal
 			
-
+			// Cria os pontos			
+			pontostxt = new Text("Points: 0");
+			pontostxt.setLayoutX(30); // <<  >>
+			pontostxt.setLayoutY(810); // ^^  vv
+			pontostxt.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR, 30));
+			pontostxt.setFill(Color.WHITE);
+			root.getChildren().add(pontostxt);
+			
 			
 			 //cria inimigos 
 			addInimigo0();
@@ -315,6 +327,7 @@ public class program extends Application {
 								&& ((pShoots.get(i).getLayoutY() < enemies0.get(j).getLayoutY() + 50))))) {
 
 					pontos += 100;
+					pontostxt.setText("Pontos: " + String.valueOf(pontos));
 					root.getChildren().remove(enemies0.get(j));
 					enemies0.remove(j);
 					root.getChildren().remove(pShoots.get(i));
@@ -332,6 +345,7 @@ public class program extends Application {
 								&& ((pShoots.get(i).getLayoutY() < enemies1.get(j).getLayoutY() + 50))))) {
 
 					pontos += 200;
+					pontostxt.setText("Pontos: " + String.valueOf(pontos));
 					root.getChildren().remove(enemies1.get(j));
 					enemies1.remove(j);
 					root.getChildren().remove(pShoots.get(i));
