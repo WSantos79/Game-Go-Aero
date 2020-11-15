@@ -25,8 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -36,19 +35,22 @@ public class program extends Application {
 
 	private int pontos = 0;
 
-	private final String IMG_FUNDO = "recursos/1280.png";
-	private final String IMG_AVIAO = "recursos/aviao.png";
+	private static final String IMG_FUNDO = "recursos/1280.png";
+	private static final String IMG_AVIAO = "recursos/aviao.png";
+	private static final String IMG_SHOOT = "recursos/shoot0.png";
 
+	
 	private final Image imgFundo = new Image(getClass().getResourceAsStream(IMG_FUNDO));
 	private final Image imgAviao = new Image(getClass().getResourceAsStream(IMG_AVIAO));
-
+	private final Image imgShoot = new Image(getClass().getResourceAsStream(IMG_SHOOT));
+		
 	private final ImageView viewFundo = new ImageView(imgFundo);
 	private final ImageView viewAviao = new ImageView(imgAviao);
 
 	private final world mundo = new world(1262, 825);
 	private final aviao aviao0 = new aviao(600, 750);
 
-
+	
 
 	List<Circle> pShoots = new ArrayList<Circle>();
 	Circle dotR = new Circle();
@@ -198,10 +200,10 @@ public class program extends Application {
 			
 		
 		Circle c = new Circle();
-		c.setFill(Color.SPRINGGREEN);		
+		c.setFill(new ImagePattern(imgShoot));
 		c.setLayoutX(x);
 		c.setLayoutY(y);
-		c.setRadius(4);
+		c.setRadius(9);
 		
 		return c;
 	}
