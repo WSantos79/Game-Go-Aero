@@ -41,7 +41,7 @@ import javafx.util.Duration;
 public class program extends Application {
 
 	private static final Random RAND = new Random();
-
+	
 	private static final String IMG_FUNDO = "recursos/1280.png";
 	private static final String IMG_AVIAO = "recursos/aviao.png";
 	private static final String IMG_SHOOT = "recursos/shoot0.png";
@@ -60,25 +60,25 @@ public class program extends Application {
 
 	private int pontos = 0;
 	Text pontostxt;
-	
+
 	// cria array de tiros
 	List<Circle> aShoots = new ArrayList<Circle>();
 	List<Circle> iShoots = new ArrayList<Circle>();
 	List<Circle> iShoots2 = new ArrayList<Circle>();
 	List<Circle> iShoots3 = new ArrayList<Circle>();
-	
+
 	// cria circle para movimentaçao dos inimigos
 	Circle dotR = new Circle();
-	
+
 	// cria array para carregar inimigos
 	List<ImageView> enemies0 = new ArrayList<ImageView>();
 	List<ImageView> enemies1 = new ArrayList<ImageView>();
-	
+
 	Pane root = new Pane();
 	AnimationTimer timer;
 
 	Timer timer1 = new Timer();
-	
+
 	boolean isMove = true;
 
 	// para controlar o add de inimigos
@@ -87,7 +87,8 @@ public class program extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		try {
+		try {	
+
 			viewFundo.setTranslateX(0);
 			viewFundo.setTranslateY(0);
 
@@ -98,7 +99,7 @@ public class program extends Application {
 			root.getChildren().add(viewAviao); // cria aviao principal
 
 			// Cria os pontos
-			pontostxt = new Text("Points: 0");
+			pontostxt = new Text("Pontos: 0");
 			pontostxt.setLayoutX(30); // << >>
 			pontostxt.setLayoutY(810); // ^^ vv
 			pontostxt.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR, 30));
@@ -107,8 +108,8 @@ public class program extends Application {
 
 			// cria inimigos
 			addInimigo0();
-			addInimigo1();			
-			
+			addInimigo1();
+
 			Scene scene = new Scene(root, mundo.DIM_X, mundo.DIM_Y);
 
 			primaryStage.setTitle("Go Aero");
@@ -181,10 +182,10 @@ public class program extends Application {
 			});
 
 			scene.setOnKeyReleased((evt) -> {
+
 				if (evt.getCode() == KeyCode.SPACE) {
 					aviaoShoot(aviao0.getPosicaoX(), aviao0.getPosicaoY());
 				}
-
 			});
 
 		} catch (Exception e) {
@@ -223,8 +224,10 @@ public class program extends Application {
 		inimigoShootUpdate();
 		enemiesMove(2);
 		enemiesDeath();
+		playerDeath();
 
 	}
+
 	// tiro do aviao
 	public Circle ashoot(double x, double y) {
 
@@ -236,6 +239,7 @@ public class program extends Application {
 
 		return c;
 	}
+
 	// tiro que sai do lado de <<< do inimigo
 	public Circle ishoot(double x, double y) {
 
@@ -247,6 +251,7 @@ public class program extends Application {
 
 		return c;
 	}
+
 	// tiro que sai do lado do meio do inimigo
 	public Circle ishoot2(double x, double y) {
 
@@ -258,6 +263,7 @@ public class program extends Application {
 
 		return c;
 	}
+
 	// tiro que sai do lado de >>> do inimigo
 	public Circle ishoot3(double x, double y) {
 
@@ -417,8 +423,8 @@ public class program extends Application {
 		}, 5000, 9000);
 		// DELEY > tempo de espera antes da 1 execucao da tarefa.
 		// INTERVAL > intervalo no qual a tarefa sera executada.
-	}	
-	
+	}
+
 	private void enemiesDeath() {
 		// verefica se inimigo foi morto e retira ele >> inimigo normal
 		for (int i = 0; i < aShoots.size(); i++) {
@@ -457,6 +463,63 @@ public class program extends Application {
 					aShoots.remove(k);
 					break;
 				}
+			}
+		}
+	}
+
+	private void playerDeath() {
+		// Verefica se o jogador foi destruido
+		for (int i = 0; i < iShoots.size(); i++) {
+
+			if (((iShoots.get(i).getLayoutX() > aviao0.getPosicaoX())
+					&& ((iShoots.get(i).getLayoutX() < aviao0.getPosicaoX() + 50))
+					&& ((iShoots.get(i).getLayoutY() > aviao0.getPosicaoY())
+							&& ((iShoots.get(i).getLayoutY() < aviao0.getPosicaoY() + 50))))
+					||
+
+					((iShoots2.get(i).getLayoutX() > aviao0.getPosicaoX())
+							&& ((iShoots2.get(i).getLayoutX() < aviao0.getPosicaoX() + 50))
+							&& ((iShoots2.get(i).getLayoutY() > aviao0.getPosicaoY())
+									&& ((iShoots2.get(i).getLayoutY() < aviao0.getPosicaoY() + 50))))
+					||
+
+					((iShoots3.get(i).getLayoutX() > aviao0.getPosicaoX())
+							&& ((iShoots3.get(i).getLayoutX() < aviao0.getPosicaoX() + 50))
+							&& ((iShoots3.get(i).getLayoutY() > aviao0.getPosicaoY())
+									&& ((iShoots3.get(i).getLayoutY() < aviao0.getPosicaoY() + 50)))))
+
+			{
+				timer.stop(); // para de mover as coisas
+				root.getChildren().remove(viewAviao); // retira a img do aviao
+				timer1.cancel(); // para de adcionar os inimigos
+
+				// Coloca o aviao em uma posiçao fora da tela para que ele possa parar de se
+				// interagir
+				aviao0.setPosicaoX(aviao0.getPosicaoX() + 1000);
+				aviao0.setPosicaoX(aviao0.getPosicaoY() + 1000);
+				viewAviao.setTranslateX(aviao0.getPosicaoX());
+				viewAviao.setTranslateY(aviao0.getPosicaoY());
+
+				// cria o texto Lost
+				Text lost = new Text();
+				lost.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR, 100));
+				lost.setX(430); // <<< >>>
+				lost.setY(412); // vvv ^^^
+				lost.setFill(Color.RED);
+				lost.setStrokeWidth(3);
+				lost.setStroke(Color.CRIMSON);
+				lost.setText("PERDEU");
+				root.getChildren().add(lost);
+
+				// Cria o apertar botao
+				Text aperte = new Text("Aperte a tecla ENTER para continuar...");
+				aperte.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, FontPosture.REGULAR, 20));
+				aperte.setX(430); // <<< >>>
+				aperte.setY(550); // vvv ^^^
+				aperte.setFill(Color.WHITE);
+				aperte.setStrokeWidth(3);
+				root.getChildren().add(aperte);
+
 			}
 		}
 	}
